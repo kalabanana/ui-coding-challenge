@@ -1,0 +1,1 @@
+{"isNameModalOpen":false,"isAddressModalOpen":false,"isTeamsModalOpen":true,"inputs":["input-0","input-1","input-2"],"name":"John Smith","address":"123 Bowl Lane NewYork, NY 10021","favoriteTeams":[]}

@@ -7,26 +7,22 @@ const defaultState = {
     address: "123 Bowl Lane NewYork, NY 10021",
     favoriteTeams: []
 };
+const axios = require('axios');
 
-const route = "http://localhost:8000";
+const route = "http://localhost:8080/api";
+
+
 const rootReducer =  (state =defaultState,  action) => {
     switch (action.type) {
         case "CHANGE_NAME":
             state = {...state, name: action.payload, isNameModalOpen: false};
-            fetch(route, {
-                method: "POST",
-                data: state
-            }).then(function(response) {
+            axios.post(route, state).then(function(response) {
             });
             return state;
 
         case "CHANGE_ADDRESS":
             state = {...state, address: action.payload, isAddressModalOpen: false};
-            fetch(route, {
-                method: "POST",
-                data: state
-            }).then(function(response) {
-                console.log(response);
+            axios.post(route, state).then(function(response) {
             });
             return state;
         case "OPEN_NAME":
@@ -38,9 +34,12 @@ const rootReducer =  (state =defaultState,  action) => {
         case "ADD_INPUTS":
             return {...state, inputs: [...state.inputs, action.payload]};
         case "UPDATE_TEAMS":
+            axios.post(route, state).then(function(response) {
+            });
             return {...state, favoriteTeams: action.payload, isTeamsModalOpen: false};
         default:
             return state;
     }
 };
+
 export default rootReducer;

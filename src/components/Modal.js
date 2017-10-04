@@ -6,7 +6,7 @@ export default class Modal extends React.Component {
 
         return (
             <div>
-                <div className="modalStyle">
+                <div className="modals">
                     {this.props.children} {/*display all the props passes by parent component*/}
 
                 </div>
