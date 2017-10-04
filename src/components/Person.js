@@ -1,23 +1,24 @@
 import React from "react";
 import Modal from './Modal';
-
 class App extends React.Component {
     constructor(props) {
         super(props);
+        this.addInputs = this.addInputs.bind(this);
+        this.onSubmit = this.onSubmit.bind(this);
     }
     render() {
-        let student = this.props.student;
-        console.log(student);
+        let {person} = this.props;
+
         let input;
         return (
             <div>
-                <h2>Student Details</h2>
+                <h2>Sports Magazine Details</h2>
                 <div>
                     <h4> Name:</h4>
-                    <span> {student.name} </span>
+                    <span> {person.name} </span>
                     <button onClick={this.props.openNameModal}>Edit</button>
                     <Modal
-                        isOpen={student.isNameModalOpen}
+                        isOpen={person.isNameModalOpen}
                         onClose={this.props.closeNameModal}
                     >
                         {" "}
@@ -31,7 +32,7 @@ class App extends React.Component {
                         <br />
                         <button
                             onClick={() => {
-                                this.addName(input.value);
+                                this.props.changeName(input.value);
                                 input.value = "";
                             }}
                         >
@@ -41,14 +42,14 @@ class App extends React.Component {
                     </Modal>
                 </div>
                 <div>
-                    <h4>College:</h4>
-                    <span>{student.college} </span>
-                    <button onClick={this.props.openCollegeModal}>Edit</button>
+                    <h4>Address:</h4>
+                    <span>{person.address} </span>
+                    <button onClick={this.props.openAddressModal}>Edit</button>
                     <Modal
-                        isOpen={student.isCollegeModalOpen}
-                        onClose={() => this.props.closeCollegeModal()}
+                        isOpen={person.isAddressModalOpen}
+                        onClose={this.props.closeAddressModal}
                     >
-                        <strong>Please enter your college</strong>
+                        <strong>Please modify your address</strong>
                         <br />
                         <input
                             ref={node => {
@@ -58,63 +59,71 @@ class App extends React.Component {
                         <br />
                         <button
                             onClick={() => {
-                                this.addCollege(input.value);
+                                this.props.changeAddress(input.value);
                                 input.value = "";
                             }}
                         >
                             Submit
                         </button>
-                        <button onClick={() => this.props.closeCollegeModal()}>
+                        <button onClick={this.props.closeAddressModal}>
                             Close
                         </button>
                     </Modal>
                 </div>
                 <div>
-                    <h4> Department:</h4>
-                    <span>{student.department} </span>
-                    <button onClick={this.props.openDepartmentModal}>Edit</button>
+                    <h4>Favorite Team:</h4>
+                    <ol>
+                        {this.renderList(person.favoriteTeams)}
+                    </ol>
+                    <button onClick={this.props.openTeamsModal}>{person.favoriteTeams.length === 0? "Add Teams" : "Update Temas"}</button>
                     <br />
                     <Modal
-                        isOpen={student.isDepartmentModalOpen}
-                        onClose={this.props.closeDepartmentModal}
+                        isOpen={person.isTeamsModalOpen}
+                        onClose={this.props.closeTeamsModal}
                     >
-                        <strong>Please Enter your Department</strong>
-                        <input
-                            ref={node => {
-                                input = node;
-                            }}
-                        />{" "}
+                        <p>close<span onClick={this.props.closeTeamsModal}>X</span></p>
+                        <strong>ADD Teams</strong>
+                        <form ref={nodes => this.nodes = nodes }  onSubmit={this.onSubmit}>
+                            <ul id="dynamicInput">
+                                {person.inputs.map((input, idx) =>{
+                                    return (<li key={idx}>Team {idx+1}: <input /></li>)
+                                })}
+                            </ul>
+                            <button onSubmit={this.onSubmit}>submit</button>
+                        </form>
                         <br />
-                        <button
-                            onClick={() => {
-                                this.addDepartment(input.value);
-                                input.value = "";
-                            }}
-                        >
-                            Submit
-                        </button>
-                        <button onClick={this.props.closeDepartmentModal}>Close</button>
+
+                        <button onClick={this.addInputs}>+add another</button>
+                        <button onClick={this.props.closeTeamsModal}>Close</button>
                     </Modal>
                 </div>
             </div>
         );
     }
 
-    addName(name) {
-        //pull the name and invoke action creater passed as props
-        this.props.addName(name);
+    renderList(teams){
+        return teams.map((team, idx) =>{
+            return (
+                <li key={idx}>
+                    {team}
+                </li>
+            )
+        })
+    }
+    onSubmit(){
+        const inputs = Array.from(this.nodes.querySelectorAll('input'));
+        const teams = inputs.reduce((teams, input) => {
+            if (input.value && input.value.length !== 0){
+                teams.push(input.value);
+            }
+            return teams;
+        }, []);
+        this.props.updateTeam(teams);
 
     }
-
-    addCollege(college) {
-        //pull the name and invoke action creater passed as props
-        this.props.addCollege(college);
-
-    }
-    addDepartment(department) {
-        //pull the name and invoke action creater passed as props
-        this.props.addDepartment(department);
-
+    addInputs(){
+        const newInput = `input-${this.props.person.inputs.length}`;
+        this.props.addInputs(newInput);
     }
 }
 
