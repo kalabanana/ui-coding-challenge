@@ -31,7 +31,6 @@ const render = () =>
             updateTeam = { teams =>
                 store.dispatch({type: "UPDATE_TEAMS", payload: teams})
             }
-
         />,
         document.getElementById("root")
     );

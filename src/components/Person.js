@@ -37,8 +37,7 @@ class App extends React.Component {
                             <input
                                 ref={node => {
                                     input = node;
-                                }}
-                            />{" "}
+                                }}/>{" "}
                             <br/><br/>
                             <button className="btn btn-primary"
                                 onClick={() => {
@@ -70,8 +69,7 @@ class App extends React.Component {
                             <br/><br/>
                             <input
                                 ref={node => {
-                                    input = node;
-                                }}/>
+                                    input = node; }}/>
                             <br/><br/>
                             <button className="btn btn-primary"
                                 onClick={() => {

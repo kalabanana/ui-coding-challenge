@@ -12,14 +12,13 @@ const axios = require('axios');
 const route = "http://localhost:8080/api";
 
 
-const rootReducer =  (state =defaultState,  action) => {
+const rootReducer =  (state =defaultState, action) => {
     switch (action.type) {
         case "CHANGE_NAME":
             state = {...state, name: action.payload, isNameModalOpen: false};
             axios.post(route, state).then(function(response) {
             });
             return state;
-
         case "CHANGE_ADDRESS":
             state = {...state, address: action.payload, isAddressModalOpen: false};
             axios.post(route, state).then(function(response) {

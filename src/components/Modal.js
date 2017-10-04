@@ -7,10 +7,10 @@ export default class Modal extends React.Component {
         return (
             <div>
                 <div className="modals">
-                    {this.props.children} {/*display all the props passes by parent component*/}
-
+                    {this.props.children}
                 </div>
-                <div className="backdropStyle" onClick={e => this.close(e)} /> {/* close the modal by click event outside the modal box*/}
+
+                <div className="backdropStyle" onClick={e => this.close(e)} />
 
             </div>
         );
