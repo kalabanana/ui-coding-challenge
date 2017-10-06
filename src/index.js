@@ -11,9 +11,9 @@ const render = () =>
     ReactDOM.render(
         <App
             person={store.getState()}
-            changeName={name => store.dispatch({ type: "CHANGE_NAME", payload: name })} //add name action creater
+            changeName={name => store.dispatch({ type: "CHANGE_NAME", payload: name })} 
             changeAddress={address =>
-                store.dispatch({ type: "CHANGE_ADDRESS", payload: address })} //add college action creater
+                store.dispatch({ type: "CHANGE_ADDRESS", payload: address })} 
             openNameModal={() => store.dispatch({ type: "OPEN_NAME", payload: true })}
             closeNameModal={() =>
                 store.dispatch({ type: "OPEN_NAME", payload: false })}
